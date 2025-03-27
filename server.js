@@ -10,14 +10,7 @@ app.use(cors());
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-let history = [
-  {
-    role: "Model",
-    parts: [
-      "I'm Tina. I help you to choose the right insurance policy. May I ask you a few personal questions to make sure I recommend the best policy for you?",
-    ],
-  },
-];
+let history = [];
 
 // API
 
@@ -27,7 +20,6 @@ app.get("/api", (req, res) => {
 
 app.post("/api/reset", (req, res) => {
   const { chatHistory } = req.body;
-  console.log(chatHistory[0]);
   history = chatHistory;
 
   res.status(200).send({ response: "ok" });
@@ -37,7 +29,6 @@ app.post("/api/chatbot", async (req, res) => {
   try {
     const { userInput } = req.body;
     const response = await getResponse(history, userInput);
-    console.log(response);
 
     console.log(
       history.map((chat) => {
